@@ -1,0 +1,6 @@
+{
+  "name": "Savia",
+  "description": "Plataforma colaborativa en español para evaluación de UX, UI, investigación y diseño de servicios con metodologías guiadas y control de acceso por IP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
