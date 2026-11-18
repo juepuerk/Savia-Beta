@@ -94,10 +94,10 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
           <MethodIcon methodId="card_sorting" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Card Sorting</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'card_sorting')?.durationEstimate}</span>
-              <span className="text-[#7D71A4]">· {cards.length} tarjetas · {categories.length} categorías</span>
+              <span className="text-[#958AC0]">· {cards.length} tarjetas · {categories.length} categorías</span>
             </div>
           </div>
         </div>
@@ -118,11 +118,11 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
                 status: 'aprobado',
               });
             }}
-            className="p-2.5 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors"
             title="Aprobar estructura como hallazgo"
-            aria-label="Aprobar estructura de card sorting como hallazgo"
           >
             <Check className="w-4 h-4" />
+            <span>Aprobar</span>
           </button>
         </div>
       </div>
@@ -138,11 +138,11 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
           />
           <button
             type="submit"
-            className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg transition-colors"
             title="Añadir tarjeta"
-            aria-label="Añadir tarjeta"
           >
             <Plus className="w-4 h-4" />
+            <span>Añadir</span>
           </button>
         </form>
 
@@ -156,11 +156,11 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
           />
           <button
             type="submit"
-            className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-lg transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-lg transition-colors"
             title="Crear categoría"
-            aria-label="Crear categoría"
           >
             <FolderPlus className="w-4 h-4" />
+            <span>Crear</span>
           </button>
         </form>
       </div>
@@ -180,7 +180,7 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: cat.color }} />
                     <h4 className="text-sm font-semibold text-[#F4F1FF]">{cat.name}</h4>
                   </div>
-                  <span className="text-xs font-mono text-[#7D71A4]">{categoryCards.length}</span>
+                  <span className="text-xs font-mono text-[#958AC0]">{categoryCards.length}</span>
                 </div>
 
                 <div className="space-y-2">
@@ -198,7 +198,7 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
                               <button
                                 key={otherCat.id}
                                 onClick={() => moveCard(card.id, otherCat.id)}
-                                className="text-[10px] px-1.5 py-0.5 bg-[#1E1638] border border-[#463578] rounded hover:border-[#B892FF] text-[#D8B4FE]"
+                                className="text-xs px-1.5 py-0.5 bg-[#1E1638] border border-[#463578] rounded hover:border-[#B892FF] text-[#D8B4FE]"
                                 title={`Mover a ${otherCat.name}`}
                               >
                                 → {otherCat.name.split(' ')[0]}
@@ -207,7 +207,7 @@ export const CardSortingTool: React.FC<{ project: Project }> = ({ project }) => 
                         </div>
                       </div>
                       {card.description && (
-                        <p className="text-[11px] text-[#7D71A4] mt-1">{card.description}</p>
+                        <p className="text-xs text-[#958AC0] mt-1">{card.description}</p>
                       )}
                     </div>
                   ))}

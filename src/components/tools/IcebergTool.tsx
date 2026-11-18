@@ -153,7 +153,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
           <MethodIcon methodId="iceberg_model" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Modelo Iceberg</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'iceberg_model')?.durationEstimate}</span>
             </div>
@@ -173,13 +173,13 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
           </div>
           <div className="h-7 w-px bg-[#2A2248]" />
           <div>
-            <span className="text-[#7D71A4] block text-[11px]">Niveles</span>
+            <span className="text-[#958AC0] block text-xs">Niveles</span>
             <span className="font-mono tabular-nums font-bold text-[#F4F1FF] text-sm">
               {coverage.levelsCovered} / 4
             </span>
           </div>
           <div>
-            <span className="text-[#7D71A4] block text-[11px]">Profundidad</span>
+            <span className="text-[#958AC0] block text-xs">Profundidad</span>
             <span className="font-mono tabular-nums font-bold text-[#22D3EE] text-sm">
               {coverage.deepRatio}%
             </span>
@@ -196,7 +196,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
             <button
               type="button"
               onClick={() => setFilterMode('all')}
-              className={`p-1.5 rounded-lg border transition-colors flex items-center gap-1.5 text-[11px] font-mono ${
+              className={`p-1.5 rounded-lg border transition-colors flex items-center gap-1.5 text-xs font-mono ${
                 filterMode === 'all'
                   ? 'bg-[#241B46] border-[#B892FF]/65 text-[#D8B4FE]'
                   : 'bg-[#1E1638] border-[#463578] text-[#A89EC9] hover:text-[#F4F1FF]'
@@ -212,7 +212,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
           <div className="relative">
             {/* Above Water Zone (10% tip) */}
             <div className="bg-gradient-to-b from-[#171130] to-[#120D26] px-5 pt-5 pb-4">
-              <div className="flex items-center justify-between text-[10px] font-mono text-[#7D71A4] mb-2">
+              <div className="flex items-center justify-between text-xs font-mono text-[#958AC0] mb-2">
                 <span>SUPERFICIE</span>
                 <span>10%</span>
               </div>
@@ -234,11 +234,11 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                   >
                     <div className="flex items-center justify-between text-xs mb-1">
                       <span className="font-semibold text-[#FF6B1A]">01 · Eventos</span>
-                      <span className="font-mono tabular-nums text-[11px] text-[#A89EC9]">
+                      <span className="font-mono tabular-nums text-xs text-[#A89EC9]">
                         {count}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#A89EC9] leading-snug">
+                    <p className="text-xs text-[#A89EC9] leading-snug">
                       Síntomas visibles
                     </p>
                   </button>
@@ -247,7 +247,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
             </div>
 
             {/* Waterline Divider */}
-            <div className="relative flex items-center justify-center py-2 bg-[#0F242C] border-y border-[#22D3EE]/35 text-[11px] font-medium text-[#22D3EE]">
+            <div className="relative flex items-center justify-center py-2 bg-[#0F242C] border-y border-[#22D3EE]/35 text-xs font-medium text-[#22D3EE]">
               <Waves className="w-3.5 h-3.5 mr-1.5" />
               <span>Línea de superficie</span>
             </div>
@@ -280,18 +280,18 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                       <span className="font-semibold" style={{ color: lvl.accentColor }}>
                         {lvl.order} · {lvl.label}
                       </span>
-                      <span className="font-mono tabular-nums text-[11px] text-[#A89EC9]">
+                      <span className="font-mono tabular-nums text-xs text-[#A89EC9]">
                         {count}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#7D71A4] leading-snug">{lvl.question}</p>
+                    <p className="text-xs text-[#958AC0] leading-snug">{lvl.question}</p>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="px-4 py-3 bg-[#0E0A1D] border-t border-[#221A3D] flex items-center gap-2 text-[11px] text-[#7D71A4]">
+          <div className="px-4 py-3 bg-[#0E0A1D] border-t border-[#221A3D] flex items-center gap-2 text-xs text-[#958AC0]">
             <ArrowDown className="w-3.5 h-3.5 text-[#22D3EE] shrink-0" />
             <span>Mayor profundidad = mayor impacto sistémico.</span>
           </div>
@@ -306,7 +306,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
             <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#221A3D]">
               <div>
                 <span
-                  className="text-[11px] font-mono uppercase tracking-wider block"
+                  className="text-xs font-mono uppercase tracking-wider block"
                   style={{ color: activeConfig.accentColor }}
                 >
                   {activeConfig.order} · {activeConfig.label}
@@ -393,16 +393,16 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <span className="text-[11px] text-[#7D71A4] font-mono">
+              <span className="text-xs text-[#958AC0] font-mono">
                 {currentUser.name} · {currentUser.ipAddress}
               </span>
               <button
                 type="submit"
-                className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
                 title={`Guardar en ${activeConfig.label}`}
-                aria-label={`Guardar observación en ${activeConfig.label}`}
               >
                 <Plus className="w-4 h-4" />
+                <span>Guardar</span>
               </button>
             </div>
           </form>
@@ -437,7 +437,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                   </div>
 
                   {lvlItems.length === 0 ? (
-                    <div className="bg-[#120E24]/60 border border-dashed border-[#2A2248] rounded-xl p-4 text-xs text-[#7D71A4] flex items-center justify-between">
+                    <div className="bg-[#120E24]/60 border border-dashed border-[#2A2248] rounded-xl p-4 text-xs text-[#958AC0] flex items-center justify-between">
                       <span>Sin aportes en este nivel</span>
                       <button
                         type="button"
@@ -470,7 +470,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                             <button
                               type="button"
                               onClick={() => deleteIcebergItem(project.id, item.id)}
-                              className="p-1.5 text-[#7D71A4] hover:text-[#F472B6] rounded-lg transition-colors shrink-0"
+                              className="p-1.5 text-[#958AC0] hover:text-[#F472B6] rounded-lg transition-colors shrink-0"
                               aria-label={`Eliminar "${item.title}"`}
                               title="Eliminar"
                             >
@@ -482,7 +482,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
                               {item.evidence && (
                                 <div className="bg-[#0E0A1D] border border-[#241D42] px-3 py-2 rounded-lg text-[#A89EC9]">
-                                  <strong className="text-[#F4F1FF] font-medium block text-[11px]">
+                                  <strong className="text-[#F4F1FF] font-medium block text-xs">
                                     Evidencia
                                   </strong>
                                   {item.evidence}
@@ -490,7 +490,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                               )}
                               {item.leveragePoint && (
                                 <div className="bg-[#0F242C]/60 border border-[#22D3EE]/30 px-3 py-2 rounded-lg text-[#CFFAFE]">
-                                  <strong className="text-[#22D3EE] font-medium flex items-center gap-1 text-[11px]">
+                                  <strong className="text-[#22D3EE] font-medium flex items-center gap-1 text-xs">
                                     <Compass className="w-3 h-3" />
                                     <span>Palanca</span>
                                   </strong>
@@ -500,7 +500,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                             </div>
                           )}
 
-                          <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#221A3D] text-[11px] text-[#7D71A4]">
+                          <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#221A3D] text-xs text-[#958AC0]">
                             <span className="font-mono tabular-nums">
                               {item.authorName} · {item.authorIp}
                             </span>
@@ -509,7 +509,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                               type="button"
                               disabled={isPromoted}
                               onClick={() => handlePromoteToFinding(item)}
-                              className={`p-1.5 rounded-lg border transition-colors ${
+                              className={`inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
                                 isPromoted
                                   ? 'bg-[#0F242C] border-[#22D3EE]/40 text-[#22D3EE] cursor-default'
                                   : 'bg-[#1E1638] border-[#463578] text-[#D8B4FE] hover:border-[#B892FF]'
@@ -520,6 +520,7 @@ export const IcebergTool: React.FC<{ project: Project }> = ({ project }) => {
                               }
                             >
                               <Check className="w-3.5 h-3.5" />
+                              <span>{isPromoted ? 'Aprobado' : 'Aprobar'}</span>
                             </button>
                           </div>
                         </div>

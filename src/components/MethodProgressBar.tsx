@@ -25,7 +25,7 @@ export const MethodProgressBar: React.FC<MethodProgressBarProps> = ({
   return (
     <div className="w-full space-y-1">
       {(label || showPercent) && (
-        <div className="flex items-center justify-between gap-2 text-[11px]">
+        <div className="flex items-center justify-between gap-2 text-xs">
           {label && <span className="text-[#A89EC9] truncate">{label}</span>}
           {showPercent && (
             <span className="font-mono tabular-nums font-semibold text-[#F4F1FF] shrink-0">

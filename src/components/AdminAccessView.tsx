@@ -55,11 +55,11 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
       {/* Top Admin Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-[26px] font-bold uppercase tracking-wide text-[#F4F1FF] flex items-center gap-2.5">
+          <h1 className="text-2xl sm:text-[26px] font-bold text-[#F4F1FF] flex items-center gap-2.5">
             <Shield className="w-5 h-5 text-[#B892FF] shrink-0" />
             <span>Control de Accesos y Proyectos</span>
           </h1>
-          <p className="text-xs text-[#7D71A4] mt-0.5 font-mono">
+          <p className="text-xs text-[#958AC0] mt-0.5 font-mono">
             {allProjects.length} proyectos totales · {members.length} identidades IP
           </p>
         </div>
@@ -67,11 +67,11 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
         <button
           type="button"
           onClick={() => setShowInviteForm(!showInviteForm)}
-          className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_20px_rgba(255,107,26,0.3)]"
+          className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_20px_rgba(255,107,26,0.3)]"
           title={showInviteForm ? 'Cerrar' : 'Registrar usuario por IP'}
-          aria-label={showInviteForm ? 'Cerrar formulario de usuario' : 'Registrar usuario por IP'}
         >
           {showInviteForm ? <X className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+          <span>{showInviteForm ? 'Cerrar' : 'Registrar usuario'}</span>
         </button>
       </div>
 
@@ -117,11 +117,11 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
             <div className="flex items-end gap-2">
               <button
                 type="submit"
-                className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
                 title="Guardar usuario IP"
-                aria-label="Guardar usuario IP"
               >
                 <Plus className="w-4 h-4" />
+                <span>Guardar</span>
               </button>
             </div>
           </div>
@@ -140,7 +140,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1 space-y-2">
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#7D71A4]">
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[#958AC0]">
                     <span className="text-[#22D3EE]">{project.productType}</span>
                     <span>·</span>
                     <span>{project.collaboratorIds.length} con acceso</span>
@@ -158,11 +158,11 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
                 <button
                   type="button"
                   onClick={() => onEnterProject(project.id)}
-                  className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
+                  className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
                   title={`Entrar a ${project.title}`}
-                  aria-label={`Entrar a ${project.title}`}
                 >
                   <ArrowUpRight className="w-4 h-4" />
+                  <span>Entrar</span>
                 </button>
               </div>
 
@@ -177,7 +177,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
                       className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border text-xs transition-colors ${
                         hasAccess
                           ? 'bg-[#241B46] border-[#B892FF]/65 text-[#D8B4FE]'
-                          : 'bg-[#0E0A1D] border-[#241D42] text-[#7D71A4] hover:text-[#A89EC9]'
+                          : 'bg-[#0E0A1D] border-[#241D42] text-[#958AC0] hover:text-[#A89EC9]'
                       }`}
                       title={
                         hasAccess
@@ -189,7 +189,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
                     >
                       {hasAccess ? <Check className="w-3 h-3 text-[#22D3EE]" /> : <Lock className="w-3 h-3" />}
                       <span>{member.name.split(' ')[0]}</span>
-                      <span className="font-mono text-[10px] opacity-75">{member.ipAddress}</span>
+                      <span className="font-mono text-xs opacity-75">{member.ipAddress}</span>
                     </button>
                   );
                 })}
@@ -201,7 +201,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
 
       {/* IP Users & Admin Roles */}
       <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-5 space-y-3">
-        <h3 className="text-xs font-mono uppercase tracking-wider text-[#7D71A4]">
+        <h3 className="text-xs font-monor text-[#958AC0]">
           Roles de Administrador por IP
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -212,7 +212,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
             >
               <div className="min-w-0">
                 <div className="text-xs font-medium text-[#F4F1FF] truncate">{m.name}</div>
-                <div className="text-[11px] font-mono text-[#7D71A4]">{m.ipAddress}</div>
+                <div className="text-xs font-mono text-[#958AC0]">{m.ipAddress}</div>
               </div>
               <button
                 type="button"
@@ -221,7 +221,7 @@ export const AdminAccessView: React.FC<AdminAccessViewProps> = ({ onEnterProject
                 className={`p-1.5 rounded-lg border transition-colors ${
                   m.isAdmin
                     ? 'bg-[#241B46] border-[#B892FF]/65 text-[#D8B4FE]'
-                    : 'bg-[#1E1638] border-[#463578] text-[#7D71A4] hover:text-[#F4F1FF]'
+                    : 'bg-[#1E1638] border-[#463578] text-[#958AC0] hover:text-[#F4F1FF]'
                 } disabled:opacity-50`}
                 title={m.isAdmin ? 'Admin activo' : 'Hacer Admin'}
                 aria-label={`Alternar rol Admin para ${m.name}`}

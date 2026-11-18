@@ -7,6 +7,7 @@
 import React from 'react';
 import { Printer, X } from 'lucide-react';
 import { Project } from '../types';
+import { Modal } from './ui/Modal';
 
 export const ExecutiveReportModal: React.FC<{
   project: Project;
@@ -15,14 +16,13 @@ export const ExecutiveReportModal: React.FC<{
   const approvedFindings = project.findings.filter((f) => f.status === 'aprobado');
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05030E]/85 backdrop-blur-md flex items-center justify-center p-4 print:static print:bg-white print:p-0">
-      <div className="w-full max-w-3xl bg-[#120E24] border border-[#2A2248] rounded-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto print:max-h-none print:border-0 print:bg-white print:text-black print:p-0 shadow-[0_24px_80px_rgba(0,0,0,0.65)]">
+    <Modal onClose={onClose} labelledBy="report-title" overlayClassName="fixed inset-0 z-50 bg-[#05030E]/85 backdrop-blur-md flex items-center justify-center p-4 print:static print:bg-white print:p-0" panelClassName="w-full max-w-3xl bg-[#120E24] border border-[#2A2248] rounded-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto print:max-h-none print:border-0 print:bg-white print:text-black print:p-0 shadow-[0_24px_80px_rgba(0,0,0,0.65)]">
         <div className="flex items-center justify-between border-b border-[#221A3D] pb-4 print:border-neutral-300">
           <div>
-            <span className="text-[11px] font-mono text-[#22D3EE] uppercase print:text-neutral-600">
+            <span className="text-xs font-mono text-[#22D3EE] uppercase print:text-neutral-600">
               Informe Ejecutivo · Savia
             </span>
-            <h2 className="text-lg font-semibold text-[#F4F1FF] print:text-black mt-0.5">
+            <h2 id="report-title" className="text-lg font-semibold text-[#F4F1FF] print:text-black mt-0.5">
               {project.title}
             </h2>
           </div>
@@ -31,11 +31,11 @@ export const ExecutiveReportModal: React.FC<{
             <button
               type="button"
               onClick={() => window.print()}
-              className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl shadow-[0_0_18px_rgba(255,107,26,0.3)]"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl shadow-[0_0_18px_rgba(255,107,26,0.3)]"
               title="Imprimir / Exportar PDF"
-              aria-label="Imprimir informe en PDF"
             >
               <Printer className="w-4 h-4" />
+              <span>Imprimir o guardar PDF</span>
             </button>
             <button
               type="button"
@@ -59,12 +59,12 @@ export const ExecutiveReportModal: React.FC<{
         </div>
 
         <div className="space-y-3">
-          <h3 className="text-xs font-mono uppercase tracking-wider text-[#7D71A4] print:text-neutral-600">
+          <h3 className="text-xs font-monor text-[#958AC0] print:text-neutral-600">
             Hallazgos Aprobados ({approvedFindings.length})
           </h3>
 
           {approvedFindings.length === 0 ? (
-            <p className="text-xs text-[#7D71A4]">No hay hallazgos aprobados aún.</p>
+            <p className="text-xs text-[#958AC0]">No hay hallazgos aprobados aún.</p>
           ) : (
             approvedFindings.map((f, i) => (
               <div
@@ -75,7 +75,7 @@ export const ExecutiveReportModal: React.FC<{
                   <span className="font-semibold text-[#F4F1FF] print:text-black">
                     {i + 1}. {f.title}
                   </span>
-                  <span className="font-mono text-[11px] text-[#B892FF] print:text-neutral-700">
+                  <span className="font-mono text-xs text-[#B892FF] print:text-neutral-700">
                     {f.severityOrImportance}
                   </span>
                 </div>
@@ -87,7 +87,6 @@ export const ExecutiveReportModal: React.FC<{
             ))
           )}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 };

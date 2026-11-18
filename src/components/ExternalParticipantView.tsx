@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Send } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, SearchX, Send } from 'lucide-react';
 import { useWorkspace } from '../context/WorkspaceContext';
 
 interface ExternalParticipantViewProps {
@@ -18,7 +18,7 @@ export const ExternalParticipantView: React.FC<ExternalParticipantViewProps> = (
   onExit,
 }) => {
   const { allProjects, submitSurveyResponse } = useWorkspace();
-  const project = allProjects.find((p) => p.id === projectId) || allProjects[0];
+  const project = allProjects.find((p) => p.id === projectId);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,7 +26,27 @@ export const ExternalParticipantView: React.FC<ExternalParticipantViewProps> = (
   const [feedback, setFeedback] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  if (!project) return null;
+  if (!project) {
+    return (
+      <main className="min-h-screen flex items-center justify-center p-4 text-[#F4F1FF]">
+        <div className="w-full max-w-md bg-[#120E24]/85 border border-[#2A2248] rounded-2xl p-8 text-center space-y-4">
+          <SearchX className="w-8 h-8 text-[#B892FF] mx-auto" aria-hidden="true" />
+          <h1 className="text-lg font-semibold">Encuesta no disponible</h1>
+          <p className="text-sm text-[#A89EC9]">
+            El enlace no es válido o la encuesta ya no está activa. Pide a quien te lo envió un enlace nuevo.
+          </p>
+          <button
+            type="button"
+            onClick={onExit}
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            Ir a Savia
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,15 +79,15 @@ export const ExternalParticipantView: React.FC<ExternalParticipantViewProps> = (
             <button
               type="button"
               onClick={onExit}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-xl"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-xl"
               title="Salir del portal"
-              aria-label="Salir de vista de participante"
             >
               <ArrowLeft className="w-4 h-4" />
+              <span>Salir</span>
             </button>
             <div>
-              <span className="text-[11px] font-mono text-[#22D3EE] uppercase">Actividad Externa</span>
-              <h1 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#F4F1FF]">
+              <span className="text-xs font-mono text-[#22D3EE] uppercase">Actividad Externa</span>
+              <h1 className="text-lg sm:text-xl font-bold text-[#F4F1FF]">
                 {project.title}
               </h1>
             </div>
@@ -191,11 +211,11 @@ export const ExternalParticipantView: React.FC<ExternalParticipantViewProps> = (
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_20px_rgba(255,107,26,0.3)]"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_20px_rgba(255,107,26,0.3)]"
                 title="Enviar respuesta"
-                aria-label="Enviar respuesta"
               >
                 <Send className="w-4 h-4" />
+                <span>Enviar respuesta</span>
               </button>
             </div>
           </form>

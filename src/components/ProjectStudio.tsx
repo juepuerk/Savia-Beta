@@ -1,21 +1,16 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Savia - Dark Violet Project Evaluation Studio with Live Method Progress Bars
+ * Savia - Project studio: breadcrumb, actions, method tabs and active tool
  */
 
-import React, { useState } from 'react';
-import {
-  ArrowLeft,
-  Sparkles,
-  FileText,
-  BookOpen,
-  CheckSquare,
-  BarChart3,
-} from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { BarChart3, BookOpen, CheckSquare, ChevronRight, FileText, Sparkles } from 'lucide-react';
 import { EvaluationMethodId, Project } from '../types';
 import { METHODS_CATALOG } from '../data/initialData';
 import { calculateMethodProgress, calculateProjectProgress } from '../utils/evaluationLogic';
+import { useAiStatus } from '../hooks/useAiStatus';
+import type { StudioTool } from '../hooks/useRoute';
 import { MethodProgressBar } from './MethodProgressBar';
 import { MethodIcon } from './MethodIcon';
 import { VisionDashboardView } from './VisionDashboardView';
@@ -31,18 +26,47 @@ import { ImpactEffortTool } from './tools/ImpactEffortTool';
 import { ServiceBlueprintTool } from './tools/ServiceBlueprintTool';
 import { SurveyTool } from './tools/SurveyTool';
 
+const SEEN_GUIDES_KEY = 'savia_seen_guides_v1';
+
+function readSeenGuides(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(SEEN_GUIDES_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function markGuideSeen(methodId: string) {
+  try {
+    const seen = new Set(readSeenGuides());
+    seen.add(methodId);
+    localStorage.setItem(SEEN_GUIDES_KEY, JSON.stringify([...seen]));
+  } catch {
+    // Storage unavailable: the guide will open again next time, which is harmless.
+  }
+}
+
 interface ProjectStudioProps {
   project: Project;
-  initialTool?: EvaluationMethodId | 'summary';
+  activeTool?: StudioTool;
+  onChangeTool: (tool: StudioTool) => void;
   onBack: () => void;
   onOpenAiSynthesis: () => void;
   onOpenReportModal: () => void;
   onOpenParticipantPortal: (projectId: string) => void;
 }
 
+const tabClass = (active: boolean) =>
+  `rounded-xl border transition-colors shrink-0 ${
+    active
+      ? 'bg-[#241B46] border-[#B892FF]/70 text-[#F4F1FF] font-medium shadow-[0_0_14px_rgba(184,146,255,0.18)]'
+      : 'bg-[#120E24]/80 border-[#2A2248] text-[#A89EC9] hover:text-[#F4F1FF] hover:border-[#463578]'
+  }`;
+
 export const ProjectStudio: React.FC<ProjectStudioProps> = ({
   project,
-  initialTool,
+  activeTool: requestedTool,
+  onChangeTool,
   onBack,
   onOpenAiSynthesis,
   onOpenReportModal,
@@ -53,13 +77,38 @@ export const ProjectStudio: React.FC<ProjectStudioProps> = ({
       ? project.activeMethods
       : (['iceberg_model'] as EvaluationMethodId[]);
 
-  const [activeTool, setActiveTool] = useState<EvaluationMethodId | 'findings' | 'summary'>(
-    initialTool || availableMethods[0]
-  );
-  const [showGuide, setShowGuide] = useState(false);
+  const isValidTool =
+    requestedTool === 'summary' ||
+    requestedTool === 'findings' ||
+    (requestedTool !== undefined && availableMethods.includes(requestedTool));
+  const activeTool: StudioTool = isValidTool ? requestedTool! : availableMethods[0];
 
   const activeMethodMeta = METHODS_CATALOG.find((m) => m.id === activeTool);
   const projectProgress = calculateProjectProgress(project);
+  const aiAvailable = useAiStatus();
+
+  // Open the method guide automatically the first time someone uses each method.
+  const [showGuide, setShowGuide] = useState(false);
+  useEffect(() => {
+    if (!activeMethodMeta) {
+      setShowGuide(false);
+      return;
+    }
+    const firstTime = !readSeenGuides().includes(activeMethodMeta.id);
+    setShowGuide(firstTime);
+    if (firstTime) markGuideSeen(activeMethodMeta.id);
+  }, [activeMethodMeta?.id]);
+
+  // Keep the active tab visible in the horizontally scrolling bar.
+  const activeTabRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    activeTabRef.current?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [activeTool]);
+
+  const aiTitle =
+    aiAvailable === false
+      ? 'La IA no está disponible en esta versión beta'
+      : 'Proponer hallazgos a partir de la evidencia recopilada';
 
   const renderTool = () => {
     if (activeTool === 'summary') {
@@ -68,7 +117,7 @@ export const ProjectStudio: React.FC<ProjectStudioProps> = ({
           embeddedInStudio
           projects={[project]}
           selectedProjectId={project.id}
-          onOpenMethod={(_, m) => setActiveTool(m)}
+          onOpenMethod={(_, m) => onChangeTool(m)}
         />
       );
     }
@@ -108,86 +157,79 @@ export const ProjectStudio: React.FC<ProjectStudioProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Studio Top Bar */}
-      <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3 min-w-0">
-          <button
-            type="button"
-            onClick={onBack}
-            className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
-            title="Volver a proyectos"
-            aria-label="Volver a proyectos"
-          >
-            <ArrowLeft className="w-4 h-4" />
+      {/* Studio header: breadcrumb, title and actions */}
+      <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 sm:p-5 space-y-4">
+        <nav aria-label="Ruta de navegación" className="flex items-center gap-1.5 text-sm text-[#A89EC9] min-w-0">
+          <button type="button" onClick={onBack} className="hover:text-[#F4F1FF] hover:underline underline-offset-4 shrink-0">
+            Proyectos
           </button>
+          <ChevronRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          <span aria-current="page" className="text-[#F4F1FF] truncate">
+            {project.title}
+          </span>
+        </nav>
 
-          <div className="min-w-0">
-            <h1 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#F4F1FF] truncate">
-              {project.title}
-            </h1>
-            <p className="text-xs text-[#A89EC9] truncate">{project.objective}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="hidden md:block w-36">
-            <MethodProgressBar
-              percent={projectProgress.overallPercent}
-              label="Total"
-              size="xs"
-            />
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <div className="min-w-0 space-y-1">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#F4F1FF] leading-tight">{project.title}</h1>
+            <p className="text-sm text-[#A89EC9] line-clamp-2">{project.objective}</p>
           </div>
 
-          {activeMethodMeta && (
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <div className="w-full sm:w-36 order-last sm:order-none">
+              <MethodProgressBar percent={projectProgress.overallPercent} label="Avance total" size="xs" />
+            </div>
+
+            {activeMethodMeta && (
+              <button
+                type="button"
+                onClick={() => setShowGuide(!showGuide)}
+                aria-pressed={showGuide}
+                aria-controls="method-guide"
+                className={`inline-flex items-center gap-1.5 px-3 py-2 text-sm rounded-xl border transition-colors ${
+                  showGuide
+                    ? 'bg-[#241B46] border-[#B892FF] text-[#F4F1FF]'
+                    : 'bg-[#1E1638] border-[#463578] text-[#C4B5FD] hover:border-[#B892FF]'
+                }`}
+              >
+                <BookOpen className="w-4 h-4" aria-hidden="true" />
+                Guía
+              </button>
+            )}
+
             <button
               type="button"
-              onClick={() => setShowGuide(!showGuide)}
-              className={`p-2 rounded-xl border transition-colors ${
-                showGuide
-                  ? 'bg-[#241B46] border-[#B892FF] text-[#D8B4FE]'
-                  : 'bg-[#1E1638] border-[#463578] text-[#C4B5FD] hover:border-[#B892FF]'
-              }`}
-              title="Guía metodológica"
-              aria-label="Mostrar guía metodológica"
+              onClick={onOpenAiSynthesis}
+              disabled={aiAvailable === false}
+              title={aiTitle}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors disabled:opacity-50 disabled:hover:border-[#463578]"
             >
-              <BookOpen className="w-4 h-4" />
+              <Sparkles className="w-4 h-4" aria-hidden="true" />
+              Síntesis IA
             </button>
-          )}
 
-          <button
-            type="button"
-            onClick={onOpenAiSynthesis}
-            className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors"
-            title="Sintetizar evidencia con IA"
-            aria-label="Sintetizar evidencia con IA"
-          >
-            <Sparkles className="w-4 h-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={onOpenReportModal}
-            className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
-            title="Generar informe ejecutivo"
-            aria-label="Generar informe ejecutivo"
-          >
-            <FileText className="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              onClick={onOpenReportModal}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            >
+              <FileText className="w-4 h-4" aria-hidden="true" />
+              Informe
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Method Selector Bar with Individual Method Progress Bars */}
-      <div className="flex items-stretch gap-2 overflow-x-auto pb-1">
+      {/* Method tabs with individual progress */}
+      <nav aria-label="Herramientas del proyecto" className="flex items-stretch gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
+          ref={activeTool === 'summary' ? activeTabRef : undefined}
           type="button"
-          onClick={() => setActiveTool('summary')}
-          className={`px-3 py-2 text-xs rounded-xl border transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-            activeTool === 'summary'
-              ? 'bg-[#241B46] border-[#B892FF]/70 text-[#F4F1FF] font-medium shadow-[0_0_14px_rgba(184,146,255,0.18)]'
-              : 'bg-[#120E24]/80 border-[#2A2248] text-[#A89EC9] hover:text-[#F4F1FF] hover:border-[#463578]'
-          }`}
+          onClick={() => onChangeTool('summary')}
+          aria-current={activeTool === 'summary' ? 'page' : undefined}
+          className={`${tabClass(activeTool === 'summary')} px-3 py-2 text-sm flex items-center gap-1.5 whitespace-nowrap`}
         >
-          <BarChart3 className="w-3.5 h-3.5 text-[#22D3EE]" />
+          <BarChart3 className="w-4 h-4 text-[#22D3EE]" aria-hidden="true" />
           <span>Resumen ({projectProgress.overallPercent}%)</span>
         </button>
 
@@ -200,22 +242,18 @@ export const ProjectStudio: React.FC<ProjectStudioProps> = ({
           return (
             <button
               key={methodId}
+              ref={isActive ? activeTabRef : undefined}
               type="button"
-              onClick={() => setActiveTool(methodId)}
-              className={`min-w-[168px] px-3 py-2 text-xs rounded-xl border transition-all whitespace-nowrap text-left space-y-1.5 ${
-                isActive
-                  ? 'bg-[#241B46] border-[#B892FF]/70 text-[#F4F1FF] font-medium shadow-[0_0_14px_rgba(184,146,255,0.18)]'
-                  : 'bg-[#120E24]/80 border-[#2A2248] text-[#A89EC9] hover:text-[#F4F1FF] hover:border-[#463578]'
-              }`}
+              onClick={() => onChangeTool(methodId)}
+              aria-current={isActive ? 'page' : undefined}
+              className={`${tabClass(isActive)} min-w-[176px] px-3 py-2 text-sm whitespace-nowrap text-left space-y-1.5`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <MethodIcon methodId={methodId} variant="inline" size="sm" />
-                  <span className="truncate font-bold">{shortName}</span>
+                  <span className="truncate font-semibold">{shortName}</span>
                 </div>
-                <span className="font-mono tabular-nums text-[10px] text-[#22D3EE] shrink-0">
-                  {prog.percent}%
-                </span>
+                <span className="font-mono tabular-nums text-xs text-[#22D3EE] shrink-0">{prog.percent}%</span>
               </div>
               <MethodProgressBar percent={prog.percent} showPercent={false} size="xs" />
             </button>
@@ -223,23 +261,23 @@ export const ProjectStudio: React.FC<ProjectStudioProps> = ({
         })}
 
         <button
+          ref={activeTool === 'findings' ? activeTabRef : undefined}
           type="button"
-          onClick={() => setActiveTool('findings')}
-          className={`px-3 py-2 text-xs rounded-xl border transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-            activeTool === 'findings'
-              ? 'bg-[#241B46] border-[#B892FF]/70 text-[#F4F1FF] font-medium'
-              : 'bg-[#120E24]/80 border-[#2A2248] text-[#A89EC9] hover:text-[#F4F1FF] hover:border-[#463578]'
-          }`}
+          onClick={() => onChangeTool('findings')}
+          aria-current={activeTool === 'findings' ? 'page' : undefined}
+          className={`${tabClass(activeTool === 'findings')} px-3 py-2 text-sm flex items-center gap-1.5 whitespace-nowrap`}
         >
-          <CheckSquare className="w-3.5 h-3.5 text-[#FF6B1A]" />
+          <CheckSquare className="w-4 h-4 text-[#FF6B1A]" aria-hidden="true" />
           <span>Hallazgos ({project.findings.length})</span>
         </button>
-      </div>
+      </nav>
 
-      {/* Optional Pedagogical Guide */}
-      {showGuide && activeMethodMeta && <PedagogicalGuide method={activeMethodMeta} />}
+      {showGuide && activeMethodMeta && (
+        <div id="method-guide">
+          <PedagogicalGuide method={activeMethodMeta} onClose={() => setShowGuide(false)} />
+        </div>
+      )}
 
-      {/* Active Tool */}
       {renderTool()}
     </div>
   );

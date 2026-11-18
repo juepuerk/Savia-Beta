@@ -86,11 +86,11 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
           <MethodIcon methodId="heuristic_evaluation" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Evaluación Heurística</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'heuristic_evaluation')?.durationEstimate}</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#7D71A4] font-mono mt-1">
+            <div className="flex items-center gap-2 text-xs text-[#958AC0] font-mono mt-1">
               <span>{items.length} registros</span>
               <span>·</span>
               <span>{items.filter((i) => i.status === 'aprobado').length} aprobados</span>
@@ -104,11 +104,11 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
           </div>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showAddForm ? 'Cerrar formulario' : 'Nueva observación heurística'}
-            aria-label={showAddForm ? 'Cerrar formulario' : 'Nueva observación heurística'}
           >
             {showAddForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddForm ? 'Cerrar' : 'Nueva observación'}</span>
           </button>
         </div>
       </div>
@@ -167,7 +167,7 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
                       type="button"
                       key={sev}
                       onClick={() => setSeverity(sev as any)}
-                      className={`flex-1 py-1.5 px-2 text-[11px] font-medium rounded-lg border transition-colors ${
+                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-lg border transition-colors ${
                         severity === sev
                           ? 'bg-[#241B46] text-[#F4F1FF] border-[#B892FF]'
                           : 'bg-[#0E0A1D] text-[#A89EC9] border-[#241D42] hover:border-[#463578]'
@@ -192,7 +192,7 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
                     type="button"
                     key={f.val}
                     onClick={() => setFrequency(f.val as any)}
-                    className={`flex-1 py-1.5 px-2 text-[11px] font-medium rounded-lg border transition-colors ${
+                    className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-lg border transition-colors ${
                       frequency === f.val
                         ? 'bg-[#241B46] text-[#D8B4FE] border-[#B892FF]'
                         : 'bg-[#0E0A1D] text-[#A89EC9] border-[#241D42] hover:border-[#463578]'
@@ -232,19 +232,19 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg transition-colors"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg transition-colors"
               title="Guardar observación"
-              aria-label="Guardar observación"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar</span>
             </button>
           </div>
         </form>
@@ -257,11 +257,11 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
             <p className="text-xs text-[#A89EC9] mb-4">Sin observaciones registradas</p>
             <button
               onClick={() => setShowAddForm(true)}
-              className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl inline-flex"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl inline-flex"
               title="Registrar primera observación"
-              aria-label="Registrar primera observación"
             >
               <Plus className="w-4 h-4" />
+              <span>Registrar observación</span>
             </button>
           </div>
         ) : (
@@ -274,7 +274,7 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
                 key={item.id}
                 className="bg-[#120E24]/80 backdrop-blur-xl p-5 rounded-2xl border border-[#2A2248] hover:border-[#463578] transition-all space-y-3"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#7D71A4]">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#958AC0]">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-[#F4F1FF]">
                       H{item.heuristicNumber} · {item.heuristicTitle}
@@ -305,7 +305,7 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
                 )}
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#221A3D] text-xs">
-                  <div className="flex items-center gap-1.5 text-[#7D71A4]">
+                  <div className="flex items-center gap-1.5 text-[#958AC0]">
                     {isApproved ? (
                       <span className="inline-flex items-center gap-1 text-[#22D3EE]">
                         <CheckCircle className="w-3.5 h-3.5" />
@@ -320,16 +320,16 @@ export const HeuristicTool: React.FC<{ project: Project }> = ({ project }) => {
                     {!isApproved && (
                       <button
                         onClick={() => handleApprove(item)}
-                        className="p-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
                         title="Aprobar hallazgo"
-                        aria-label={`Aprobar "${item.title}"`}
                       >
                         <ThumbsUp className="w-3.5 h-3.5" />
+                        <span>Aprobar</span>
                       </button>
                     )}
                     <button
                       onClick={() => deleteHeuristicItem(project.id, item.id)}
-                      className="p-1.5 text-[#7D71A4] hover:text-[#F472B6] rounded-lg transition-colors"
+                      className="p-1.5 text-[#958AC0] hover:text-[#F472B6] rounded-lg transition-colors"
                       title="Eliminar observación"
                       aria-label={`Eliminar "${item.title}"`}
                     >
