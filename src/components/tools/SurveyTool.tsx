@@ -99,7 +99,7 @@ export const SurveyTool: React.FC<{
           <MethodIcon methodId="survey_feedback" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Encuestas y Actividades Externas</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'survey_feedback')?.durationEstimate}</span>
             </div>
@@ -116,26 +116,26 @@ export const SurveyTool: React.FC<{
 
           <button
             onClick={handleCopyLink}
-            className="p-2.5 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-xl transition-colors"
             title={copiedLink ? 'Enlace copiado' : 'Copiar enlace público'}
-            aria-label={copiedLink ? 'Enlace copiado' : 'Copiar enlace público'}
           >
             {copiedLink ? <CheckCircle className="w-4 h-4 text-[#22D3EE]" /> : <Copy className="w-4 h-4" />}
+            <span>{copiedLink ? 'Copiado' : 'Copiar enlace'}</span>
           </button>
 
           <button
             onClick={onOpenParticipantPortal}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title="Abrir vista del participante"
-            aria-label="Abrir vista del participante"
           >
             <ExternalLink className="w-4 h-4" />
+            <span>Vista del participante</span>
           </button>
         </div>
       </div>
 
       <div className="bg-[#120E24]/80 p-4 rounded-2xl border border-[#2A2248] flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-xs text-[#7D71A4] font-mono">
+        <div className="flex items-center gap-2 text-xs text-[#958AC0] font-mono">
           <span>{questions.length} preguntas</span>
           <span>·</span>
           <span className="text-[#F4F1FF] font-semibold">{responses.length} respuestas</span>
@@ -145,24 +145,24 @@ export const SurveyTool: React.FC<{
           <button
             onClick={handleDownloadCsv}
             disabled={responses.length === 0}
-            className={`p-2.5 rounded-xl border transition-colors ${
+            className={`inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 rounded-xl border transition-colors ${
               responses.length > 0
                 ? 'bg-[#1E1638] border-[#463578] text-[#D8B4FE] hover:border-[#B892FF]'
                 : 'bg-[#0E0A1D] border-[#241D42] text-[#4C436E] cursor-not-allowed'
             }`}
             title="Exportar CSV"
-            aria-label="Exportar respuestas a CSV"
           >
             <Download className="w-4 h-4" />
+            <span>Exportar CSV</span>
           </button>
 
           <button
             onClick={() => setShowAddQuestion(!showAddQuestion)}
-            className="p-2.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-xl transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-xl transition-colors"
             title={showAddQuestion ? 'Cerrar' : 'Añadir pregunta'}
-            aria-label={showAddQuestion ? 'Cerrar formulario' : 'Añadir pregunta'}
           >
             {showAddQuestion ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddQuestion ? 'Cerrar' : 'Añadir pregunta'}</span>
           </button>
         </div>
       </div>
@@ -212,19 +212,19 @@ export const SurveyTool: React.FC<{
             <button
               type="button"
               onClick={() => setShowAddQuestion(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
               title="Guardar pregunta"
-              aria-label="Guardar pregunta"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar pregunta</span>
             </button>
           </div>
         </form>
@@ -233,7 +233,7 @@ export const SurveyTool: React.FC<{
       <div className="bg-[#120E24]/80 backdrop-blur-xl rounded-2xl border border-[#2A2248] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#0E0A1D] text-[#7D71A4] border-b border-[#2A2248]">
+            <thead className="bg-[#0E0A1D] text-[#958AC0] border-b border-[#2A2248]">
               <tr>
                 <th className="px-4 py-3 font-medium">Participante</th>
                 <th className="px-4 py-3 font-medium">Fecha</th>
@@ -248,7 +248,7 @@ export const SurveyTool: React.FC<{
             <tbody className="divide-y divide-[#221A3D]">
               {responses.length === 0 ? (
                 <tr>
-                  <td colSpan={questions.length + 3} className="px-4 py-8 text-center text-xs text-[#7D71A4]">
+                  <td colSpan={questions.length + 3} className="px-4 py-8 text-center text-xs text-[#958AC0]">
                     Sin respuestas todavía
                   </td>
                 </tr>
@@ -257,9 +257,9 @@ export const SurveyTool: React.FC<{
                   <tr key={r.id} className="hover:bg-[#191234] transition-colors">
                     <td className="px-4 py-3">
                       <div className="font-medium text-[#F4F1FF]">{r.participantName}</div>
-                      <div className="text-[11px] text-[#7D71A4]">{r.participantEmail || 'Anónimo'}</div>
+                      <div className="text-xs text-[#958AC0]">{r.participantEmail || 'Anónimo'}</div>
                     </td>
-                    <td className="px-4 py-3 text-[#7D71A4] font-mono whitespace-nowrap">
+                    <td className="px-4 py-3 text-[#958AC0] font-mono whitespace-nowrap">
                       {new Date(r.submittedAt).toLocaleDateString('es-CO')}
                     </td>
                     {questions.map((q) => (

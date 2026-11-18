@@ -24,10 +24,10 @@ export const ReportsGalleryView: React.FC<ReportsGalleryViewProps> = ({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-[26px] font-bold uppercase tracking-wide text-[#F4F1FF]">
+        <h1 className="text-2xl sm:text-[26px] font-bold text-[#F4F1FF]">
           Informes Ejecutivos
         </h1>
-        <p className="text-xs text-[#7D71A4] font-mono mt-0.5">
+        <p className="text-xs text-[#958AC0] font-mono mt-0.5">
           {projects.length} proyectos accesibles
         </p>
       </div>
@@ -42,7 +42,7 @@ export const ReportsGalleryView: React.FC<ReportsGalleryViewProps> = ({
               className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] hover:border-[#463578] rounded-2xl p-5 flex flex-col justify-between gap-4 transition-colors"
             >
               <div className="space-y-2">
-                <span className="text-[11px] font-mono text-[#22D3EE]">{project.productType}</span>
+                <span className="text-xs font-mono text-[#22D3EE]">{project.productType}</span>
                 <h2 className="text-sm font-semibold text-[#F4F1FF]">{project.title}</h2>
                 <p className="text-xs font-mono text-[#B892FF]">
                   {approvedCount} hallazgos aprobados
@@ -54,20 +54,20 @@ export const ReportsGalleryView: React.FC<ReportsGalleryViewProps> = ({
                 <button
                   type="button"
                   onClick={() => onOpenProject(project.id)}
-                  className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors"
                   title="Abrir proyecto"
-                  aria-label={`Abrir proyecto ${project.title}`}
                 >
                   <ArrowUpRight className="w-4 h-4" />
+                  <span>Abrir proyecto</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => onOpenReport(project.id)}
-                  className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+                  className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
                   title="Ver informe PDF"
-                  aria-label={`Ver informe PDF de ${project.title}`}
                 >
                   <FileText className="w-4 h-4" />
+                  <span>Ver informe</span>
                 </button>
               </div>
             </div>

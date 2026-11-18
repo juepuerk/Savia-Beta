@@ -102,7 +102,7 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
           <MethodIcon methodId="usability_sus" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Pruebas de Usabilidad & Escala SUS</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'usability_sus')?.durationEstimate}</span>
             </div>
@@ -115,7 +115,7 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
                   / 100 · Grado {avgSus >= 80 ? 'A' : avgSus >= 68 ? 'C' : 'D'}
                 </span>
               )}
-              <span className="text-xs text-[#7D71A4]">
+              <span className="text-xs text-[#958AC0]">
                 · {respondents.length} respuestas
               </span>
             </div>
@@ -128,11 +128,11 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
           </div>
           <button
             onClick={() => setShowSusForm(!showSusForm)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showSusForm ? 'Cerrar escala SUS' : 'Responder escala SUS'}
-            aria-label={showSusForm ? 'Cerrar escala SUS' : 'Responder escala SUS'}
           >
             {showSusForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showSusForm ? 'Cerrar' : 'Responder SUS'}</span>
           </button>
         </div>
       </div>
@@ -209,19 +209,19 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
             <button
               type="button"
               onClick={() => setShowSusForm(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
               title="Guardar SUS"
-              aria-label="Guardar respuesta SUS"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar respuesta</span>
             </button>
           </div>
         </form>
@@ -231,15 +231,15 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
         <div className="flex items-center justify-between bg-[#120E24]/80 p-4 rounded-2xl border border-[#2A2248]">
           <div>
             <h4 className="text-sm font-semibold text-[#F4F1FF]">Tareas Evaluadas</h4>
-            <p className="text-xs text-[#7D71A4]">Éxito %, tiempo y esfuerzo (SEQ 1-7)</p>
+            <p className="text-xs text-[#958AC0]">Éxito %, tiempo y esfuerzo (SEQ 1-7)</p>
           </div>
           <button
             onClick={() => setShowTaskForm(!showTaskForm)}
-            className="p-2 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
             title={showTaskForm ? 'Cerrar' : 'Añadir tarea'}
-            aria-label={showTaskForm ? 'Cerrar formulario de tarea' : 'Añadir tarea de usabilidad'}
           >
             {showTaskForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showTaskForm ? 'Cerrar' : 'Añadir tarea'}</span>
           </button>
         </div>
 
@@ -320,19 +320,19 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
               <button
                 type="button"
                 onClick={() => setShowTaskForm(false)}
-                className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
                 title="Cancelar"
-                aria-label="Cancelar"
               >
                 <X className="w-4 h-4" />
+                <span>Cancelar</span>
               </button>
               <button
                 type="submit"
-                className="p-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
                 title="Guardar tarea"
-                aria-label="Guardar tarea"
               >
                 <Check className="w-4 h-4" />
+                <span>Guardar tarea</span>
               </button>
             </div>
           </form>
@@ -346,15 +346,15 @@ export const UsabilitySusTool: React.FC<{ project: Project }> = ({ project }) =>
 
               <div className="grid grid-cols-3 gap-2 py-2 border-y border-[#221A3D] text-center text-xs">
                 <div>
-                  <span className="block text-[10px] text-[#7D71A4]">Éxito</span>
+                  <span className="block text-xs text-[#958AC0]">Éxito</span>
                   <span className="font-mono font-bold text-[#22D3EE]">{t.successRate}%</span>
                 </div>
                 <div>
-                  <span className="block text-[10px] text-[#7D71A4]">Tiempo</span>
+                  <span className="block text-xs text-[#958AC0]">Tiempo</span>
                   <span className="font-mono font-bold text-[#F4F1FF]">{t.avgTimeSeconds}s</span>
                 </div>
                 <div>
-                  <span className="block text-[10px] text-[#7D71A4]">SEQ</span>
+                  <span className="block text-xs text-[#958AC0]">SEQ</span>
                   <span className="font-mono font-bold text-[#FF6B1A]">{t.seqScore}</span>
                 </div>
               </div>

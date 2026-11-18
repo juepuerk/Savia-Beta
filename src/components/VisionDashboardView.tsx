@@ -204,10 +204,10 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
       {!embeddedInStudio && (
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl sm:text-[26px] font-bold uppercase tracking-wide text-[#F4F1FF]">
+            <h1 className="text-2xl sm:text-[26px] font-bold text-[#F4F1FF]">
               Panel Analítico de Proyectos
             </h1>
-            <p className="text-xs text-[#7D71A4] font-mono mt-0.5">
+            <p className="text-xs text-[#958AC0] font-mono mt-0.5">
               Estado, avance metodológico y vista previa cuantitativa
             </p>
           </div>
@@ -238,7 +238,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
             </div>
           ) : (
             <div className="flex items-center gap-2.5 w-full md:w-auto">
-              <span className="text-[11px] font-mono text-[#B892FF] shrink-0 hidden sm:inline">
+              <span className="text-xs font-mono text-[#B892FF] shrink-0 hidden sm:inline">
                 {projects.length} proyectos
               </span>
               <div className="relative flex-1 md:w-[340px]">
@@ -274,14 +274,14 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         {/* KPI 1 */}
         <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
               Avance Total
             </span>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold font-mono tabular-nums text-[#F4F1FF]">
                 {progress.overallPercent}%
               </span>
-              <span className="text-[11px] font-mono text-[#22D3EE]">
+              <span className="text-xs font-mono text-[#22D3EE]">
                 {progress.byMethod.length} métodos
               </span>
             </div>
@@ -294,14 +294,14 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         {/* KPI 2 */}
         <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
               Escala SUS / Éxito
             </span>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold font-mono tabular-nums text-[#F4F1FF]">
                 {metrics.avgSus !== null ? metrics.avgSus : metrics.avgTaskSuccess !== null ? `${metrics.avgTaskSuccess}%` : '—'}
               </span>
-              <span className="text-[11px] font-mono text-[#B892FF]">
+              <span className="text-xs font-mono text-[#B892FF]">
                 {metrics.avgSus !== null ? '/ 100 pts' : metrics.avgTaskSuccess !== null ? 'éxito' : 'sin datos'}
               </span>
             </div>
@@ -314,7 +314,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         {/* KPI 3 */}
         <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
               {metrics.wcagRate !== null ? 'Conformidad WCAG' : metrics.icebergDeepRatio !== null ? 'Profundidad Sistémica' : 'Severidad Prom.'}
             </span>
             <div className="flex items-baseline gap-2">
@@ -327,7 +327,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                   ? metrics.avgHeuristicSeverity
                   : '—'}
               </span>
-              <span className="text-[11px] font-mono text-[#22D3EE]">
+              <span className="text-xs font-mono text-[#22D3EE]">
                 {metrics.wcagRate !== null ? 'AA' : metrics.icebergDeepRatio !== null ? '90% base' : '0–4'}
               </span>
             </div>
@@ -340,14 +340,14 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         {/* KPI 4 */}
         <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
               Evidencia & Hallazgos
             </span>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold font-mono tabular-nums text-[#F4F1FF]">
                 {metrics.totalEvidenceCount}
               </span>
-              <span className="text-[11px] font-mono text-[#EC4899]">
+              <span className="text-xs font-mono text-[#EC4899]">
                 {metrics.approvedFindingsCount}/{metrics.totalFindingsCount} aprob.
               </span>
             </div>
@@ -364,7 +364,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         <div className="lg:col-span-4 bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-5 flex flex-col justify-between gap-4">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
                 Estado del Proyecto
               </span>
               <h2 className="text-sm font-semibold text-[#F4F1FF] mt-0.5 truncate">
@@ -372,7 +372,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
               </h2>
             </div>
             <span
-              className={`px-2.5 py-1 rounded-lg border text-[11px] font-mono shrink-0 ${statusMeta.cls}`}
+              className={`px-2.5 py-1 rounded-lg border text-xs font-mono shrink-0 ${statusMeta.cls}`}
             >
               {statusMeta.label}
             </span>
@@ -414,7 +414,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
               <span className="text-3xl font-bold font-mono tabular-nums text-[#F4F1FF]">
                 {progress.overallPercent}%
               </span>
-              <span className="text-[11px] text-[#A89EC9]">Diligenciado</span>
+              <span className="text-xs text-[#A89EC9]">Diligenciado</span>
             </div>
           </div>
 
@@ -430,7 +430,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         <div className="lg:col-span-8 bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-5 flex flex-col justify-between gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
                 Preview de Data Cuantitativa
               </span>
               <h2 className="text-sm font-semibold text-[#F4F1FF] mt-0.5">
@@ -450,7 +450,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                   setChartMode('methods');
                   setHoveredIdx(null);
                 }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] transition-colors ${
+                className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${
                   effectiveMode === 'methods'
                     ? 'bg-[#241B46] text-[#D8B4FE] border border-[#B892FF]/50 font-medium'
                     : 'text-[#A89EC9] hover:text-[#F4F1FF]'
@@ -465,7 +465,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                   setChartMode('journey');
                   setHoveredIdx(null);
                 }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] transition-colors disabled:opacity-40 ${
+                className={`px-2.5 py-1 rounded-lg text-xs transition-colors disabled:opacity-40 ${
                   effectiveMode === 'journey'
                     ? 'bg-[#241B46] text-[#D8B4FE] border border-[#B892FF]/50 font-medium'
                     : 'text-[#A89EC9] hover:text-[#F4F1FF]'
@@ -480,7 +480,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                   setChartMode('tasks');
                   setHoveredIdx(null);
                 }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] transition-colors disabled:opacity-40 ${
+                className={`px-2.5 py-1 rounded-lg text-xs transition-colors disabled:opacity-40 ${
                   effectiveMode === 'tasks'
                     ? 'bg-[#241B46] text-[#D8B4FE] border border-[#B892FF]/50 font-medium'
                     : 'text-[#A89EC9] hover:text-[#F4F1FF]'
@@ -494,7 +494,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
           {/* Interactive SVG Chart */}
           <div className="relative w-full overflow-hidden">
             {points.length === 0 ? (
-              <div className="h-[190px] flex items-center justify-center text-xs text-[#7D71A4] bg-[#0E0A1D]/60 rounded-xl border border-[#241D42]">
+              <div className="h-[190px] flex items-center justify-center text-xs text-[#958AC0] bg-[#0E0A1D]/60 rounded-xl border border-[#241D42]">
                 Registra datos en los métodos activos para visualizar la curva.
               </div>
             ) : (
@@ -600,7 +600,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         <div className="lg:col-span-7 bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
                 Metodologías Activas
               </span>
               <h3 className="text-sm font-semibold text-[#F4F1FF]">
@@ -618,7 +618,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                 const shortName = meta ? meta.name.split(' (')[0].split(' ')[0] : m.methodId;
                 return (
                   <div key={m.methodId} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
-                    <span className="text-[10px] font-mono tabular-nums text-[#A89EC9]">
+                    <span className="text-xs font-mono tabular-nums text-[#A89EC9]">
                       {m.percent}%
                     </span>
                     <div className="w-full max-w-[34px] h-full bg-[#191234] rounded-lg flex items-end overflow-hidden p-0.5">
@@ -630,7 +630,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                         }}
                       />
                     </div>
-                    <span className="text-[10px] text-[#7D71A4] truncate max-w-[60px]">
+                    <span className="text-xs text-[#958AC0] truncate max-w-[72px]">
                       {shortName}
                     </span>
                   </div>
@@ -658,13 +658,13 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                           {name}
                         </span>
                         {meta && (
-                          <span className="flex items-center gap-1 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+                          <span className="flex items-center gap-1 text-xs font-mono text-[#D8B4FE] mt-0.5">
                             <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
                             <span>{meta.durationEstimate}</span>
                           </span>
                         )}
                       </div>
-                      <span className="font-mono text-[11px] text-[#7D71A4] shrink-0">
+                      <span className="font-mono text-xs text-[#958AC0] shrink-0">
                         {m.completedLabel}
                       </span>
                     </div>
@@ -674,11 +674,11 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenMethod(activeProject.id, m.methodId)}
-                    className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
+                    className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
                     title={`Abrir ${name}`}
-                    aria-label={`Abrir método ${name}`}
                   >
                     <ArrowUpRight className="w-4 h-4" />
+                    <span>Abrir</span>
                   </button>
                 </div>
               );
@@ -689,7 +689,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
         {/* Right: Quantitative Indicators Summary Table */}
         <div className="lg:col-span-5 bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-5 flex flex-col justify-between gap-4">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D71A4] block">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#958AC0] block">
               Indicadores Cuantitativos
             </span>
             <h3 className="text-sm font-semibold text-[#F4F1FF]">
@@ -711,7 +711,7 @@ export const VisionDashboardView: React.FC<VisionDashboardViewProps> = ({
                     />
                     <span className="text-[#F4F1FF] truncate">{row.label}</span>
                   </div>
-                  <span className="text-[10px] font-mono text-[#7D71A4] pl-4 block">
+                  <span className="text-xs font-mono text-[#958AC0] pl-4 block">
                     {row.ref}
                   </span>
                 </div>

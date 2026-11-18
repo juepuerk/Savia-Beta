@@ -43,7 +43,7 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
       <div className="bg-[#120E24]/80 backdrop-blur-xl border border-[#2A2248] rounded-2xl p-4 flex items-center justify-between gap-4">
         <div>
           <h3 className="text-sm font-semibold text-[#F4F1FF]">Revisión y Aprobación</h3>
-          <p className="text-xs font-mono text-[#7D71A4] mt-0.5">
+          <p className="text-xs font-mono text-[#958AC0] mt-0.5">
             {project.findings.filter((f) => f.status === 'aprobado').length} aprobados ·{' '}
             {project.findings.filter((f) => f.status === 'borrador').length} borradores
           </p>
@@ -52,11 +52,11 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
         <button
           type="button"
           onClick={() => setShowAdd(!showAdd)}
-          className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+          className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shadow-[0_0_16px_rgba(255,107,26,0.3)]"
           title={showAdd ? 'Cerrar' : 'Nuevo hallazgo'}
-          aria-label={showAdd ? 'Cerrar formulario' : 'Nuevo hallazgo'}
         >
           {showAdd ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+          <span>{showAdd ? 'Cerrar' : 'Nuevo hallazgo'}</span>
         </button>
       </div>
 
@@ -116,17 +116,17 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
             <button
               type="button"
               onClick={() => setShowAdd(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
-              aria-label="Cancelar"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
-              aria-label="Guardar hallazgo"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar hallazgo</span>
             </button>
           </div>
         </form>
@@ -134,7 +134,7 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
 
       <div className="space-y-3">
         {project.findings.length === 0 ? (
-          <div className="bg-[#120E24]/80 border border-[#2A2248] rounded-2xl p-10 text-center text-xs text-[#7D71A4]">
+          <div className="bg-[#120E24]/80 border border-[#2A2248] rounded-2xl p-10 text-center text-xs text-[#958AC0]">
             Sin hallazgos aún
           </div>
         ) : (
@@ -147,7 +147,7 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="flex items-center gap-2 text-[11px] font-mono text-[#7D71A4] mb-1">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#958AC0] mb-1">
                       <span
                         className={
                           f.severityOrImportance === 'Alta'
@@ -177,17 +177,17 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
                       <button
                         type="button"
                         onClick={() => updateFinding(project.id, f.id, { status: 'aprobado' })}
-                        className="p-1.5 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-lg"
+                        className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] rounded-lg"
                         title="Aprobar hallazgo"
-                        aria-label={`Aprobar "${f.title}"`}
                       >
                         <Check className="w-3.5 h-3.5" />
+                        <span>Aprobar</span>
                       </button>
                     )}
                     <button
                       type="button"
                       onClick={() => deleteFinding(project.id, f.id)}
-                      className="p-1.5 text-[#7D71A4] hover:text-[#F472B6] rounded-lg"
+                      className="p-1.5 text-[#958AC0] hover:text-[#F472B6] rounded-lg"
                       title="Eliminar hallazgo"
                       aria-label={`Eliminar "${f.title}"`}
                     >
@@ -198,11 +198,11 @@ export const FindingsApprovalView: React.FC<{ project: Project }> = ({ project }
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs pt-2 border-t border-[#221A3D]">
                   <div className="bg-[#0E0A1D] border border-[#241D42] p-3 rounded-lg text-[#A89EC9]">
-                    <span className="text-[11px] text-[#7D71A4] block mb-0.5">Evidencia</span>
+                    <span className="text-xs text-[#958AC0] block mb-0.5">Evidencia</span>
                     {f.evidence}
                   </div>
                   <div className="bg-[#0F242C]/50 border border-[#22D3EE]/25 p-3 rounded-lg text-[#CFFAFE]">
-                    <span className="text-[11px] text-[#22D3EE] block mb-0.5">Recomendación</span>
+                    <span className="text-xs text-[#22D3EE] block mb-0.5">Recomendación</span>
                     {f.recommendation}
                   </div>
                 </div>

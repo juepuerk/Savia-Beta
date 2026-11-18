@@ -19,10 +19,10 @@ export const MethodsCatalogView: React.FC<MethodsCatalogViewProps> = ({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-[26px] font-bold uppercase tracking-wide text-[#F4F1FF]">
+        <h1 className="text-2xl sm:text-[26px] font-bold text-[#F4F1FF]">
           Métodos de Evaluación
         </h1>
-        <p className="text-xs text-[#7D71A4] mt-0.5 font-mono">
+        <p className="text-xs text-[#958AC0] mt-0.5 font-mono">
           {METHODS_CATALOG.length} herramientas interactivas con barras de avance
         </p>
       </div>
@@ -36,7 +36,7 @@ export const MethodsCatalogView: React.FC<MethodsCatalogViewProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-3">
                 <MethodIcon methodId={method.id} variant="badge" />
-                <span className="text-[11px] font-mono text-[#22D3EE] text-right">
+                <span className="text-xs font-mono text-[#22D3EE] text-right">
                   {method.category}
                 </span>
               </div>
@@ -55,17 +55,17 @@ export const MethodsCatalogView: React.FC<MethodsCatalogViewProps> = ({
             </div>
 
             <div className="pt-3 border-t border-[#221A3D] flex items-center justify-between">
-              <span className="text-[11px] text-[#7D71A4] truncate pr-2">
+              <span className="text-xs text-[#958AC0] truncate pr-2">
                 {method.deliverables.join(' · ')}
               </span>
               <button
                 type="button"
                 onClick={() => onStartProjectWithMethod(method.id)}
-                className="p-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] hover:border-[#B892FF] text-[#D8B4FE] hover:text-[#F4F1FF] rounded-xl transition-colors shrink-0"
                 title={`Crear proyecto con ${method.name}`}
-                aria-label={`Crear proyecto con ${method.name}`}
               >
                 <Plus className="w-4 h-4" />
+                <span>Usar en proyecto</span>
               </button>
             </div>
           </div>

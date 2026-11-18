@@ -101,10 +101,10 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
           <MethodIcon methodId="service_blueprint" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Service Blueprint (5 Capas)</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'service_blueprint')?.durationEstimate}</span>
-              <span className="text-[#7D71A4]">· {steps.length} pasos · 5 capas</span>
+              <span className="text-[#958AC0]">· {steps.length} pasos · 5 capas</span>
             </div>
           </div>
         </div>
@@ -115,11 +115,11 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
           </div>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showAddForm ? 'Cerrar' : 'Añadir paso'}
-            aria-label={showAddForm ? 'Cerrar formulario' : 'Añadir paso al blueprint'}
           >
             {showAddForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddForm ? 'Cerrar' : 'Añadir paso'}</span>
           </button>
         </div>
       </div>
@@ -204,19 +204,19 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
               title="Guardar paso"
-              aria-label="Guardar paso"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar paso</span>
             </button>
           </div>
         </form>
@@ -226,7 +226,7 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
         <table className="w-full border-collapse text-xs min-w-[760px]">
           <thead>
             <tr>
-              <th className="w-44 p-3 text-left font-mono text-[#7D71A4] uppercase text-[11px] bg-[#0E0A1D] border-b border-[#2A2248]">
+              <th className="w-44 p-3 text-left font-mono text-[#958AC0] uppercase text-xs bg-[#0E0A1D] border-b border-[#2A2248]">
                 Capa
               </th>
               {steps.map((s) => (
@@ -259,7 +259,7 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
             </tr>
 
             <tr className="bg-[#241B46]/60">
-              <td colSpan={steps.length + 1} className="py-1 px-3 text-[10px] font-mono text-[#D8B4FE] uppercase tracking-widest text-center">
+              <td colSpan={steps.length + 1} className="py-1 px-3 text-xs font-mono text-[#D8B4FE] uppercase tracking-widest text-center">
                 Línea de Interacción
               </td>
             </tr>
@@ -274,7 +274,7 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
             </tr>
 
             <tr className="bg-[#241B46]/60">
-              <td colSpan={steps.length + 1} className="py-1 px-3 text-[10px] font-mono text-[#FF823A] uppercase tracking-widest text-center">
+              <td colSpan={steps.length + 1} className="py-1 px-3 text-xs font-mono text-[#FF823A] uppercase tracking-widest text-center">
                 Línea de Visibilidad
               </td>
             </tr>
@@ -291,7 +291,7 @@ export const ServiceBlueprintTool: React.FC<{ project: Project }> = ({ project }
             <tr>
               <td className="p-3 font-medium text-[#38BDF8] bg-[#0E1E32]/50">5. Sistemas</td>
               {steps.map((s) => (
-                <td key={s.id} className="p-3 font-mono text-[11px] text-[#A89EC9] align-top">
+                <td key={s.id} className="p-3 font-mono text-xs text-[#A89EC9] align-top">
                   {s.supportSystems || '—'}
                 </td>
               ))}

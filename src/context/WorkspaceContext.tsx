@@ -23,6 +23,7 @@ import {
   getAccessibleProjects,
   toggleProjectUserAccess,
 } from '../utils/evaluationLogic';
+import { useToast } from '../components/ui/Toast';
 
 const STORAGE_KEYS = {
   USERS: 'savia_users_v7',
@@ -192,6 +193,42 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     [members, currentUserId]
   );
 
+  const toast = useToast();
+
+  type RemovableField = 'icebergItems' | 'heuristicItems' | 'journeyStages' | 'findings';
+
+  /** Removes an item from a project list and offers "Deshacer", restoring it at its original position. */
+  const removeWithUndo = (projectId: string, field: RemovableField, itemId: string, message: string) => {
+    const project = allProjects.find((p) => p.id === projectId);
+    const list = (project?.[field] ?? []) as Array<{ id: string }>;
+    const index = list.findIndex((i) => i.id === itemId);
+    if (index < 0) return;
+    const removed = list[index];
+
+    setAllProjects((prev) =>
+      prev.map((p) =>
+        p.id === projectId
+          ? { ...p, [field]: (p[field] as Array<{ id: string }>).filter((i) => i.id !== itemId) }
+          : p
+      )
+    );
+
+    toast(message, {
+      actionLabel: 'Deshacer',
+      onAction: () =>
+        setAllProjects((prev) =>
+          prev.map((p) => {
+            if (p.id !== projectId) return p;
+            const current = p[field] as Array<{ id: string }>;
+            if (current.some((i) => i.id === itemId)) return p;
+            const next = [...current];
+            next.splice(Math.min(index, next.length), 0, removed);
+            return { ...p, [field]: next };
+          })
+        ),
+    });
+  };
+
   const projects = useMemo(
     () => getAccessibleProjects(allProjects, currentUser, false),
     [allProjects, currentUser]
@@ -340,15 +377,8 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
   };
 
-  const deleteIcebergItem = (projectId: string, itemId: string) => {
-    setAllProjects((prev) =>
-      prev.map((p) =>
-        p.id === projectId
-          ? { ...p, icebergItems: p.icebergItems.filter((i) => i.id !== itemId) }
-          : p
-      )
-    );
-  };
+  const deleteIcebergItem = (projectId: string, itemId: string) =>
+    removeWithUndo(projectId, 'icebergItems', itemId, 'Observación eliminada');
 
   const addHeuristicItem = (
     projectId: string,
@@ -389,15 +419,8 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
   };
 
-  const deleteHeuristicItem = (projectId: string, itemId: string) => {
-    setAllProjects((prev) =>
-      prev.map((p) =>
-        p.id === projectId
-          ? { ...p, heuristicItems: p.heuristicItems.filter((h) => h.id !== itemId) }
-          : p
-      )
-    );
-  };
+  const deleteHeuristicItem = (projectId: string, itemId: string) =>
+    removeWithUndo(projectId, 'heuristicItems', itemId, 'Observación eliminada');
 
   const addJourneyStage = (
     projectId: string,
@@ -418,15 +441,8 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
   };
 
-  const deleteJourneyStage = (projectId: string, stageId: string) => {
-    setAllProjects((prev) =>
-      prev.map((p) =>
-        p.id === projectId
-          ? { ...p, journeyStages: p.journeyStages.filter((s) => s.id !== stageId) }
-          : p
-      )
-    );
-  };
+  const deleteJourneyStage = (projectId: string, stageId: string) =>
+    removeWithUndo(projectId, 'journeyStages', stageId, 'Fase eliminada');
 
   const addSusResponse = (
     projectId: string,
@@ -537,6 +553,9 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           : p
       )
     );
+    toast(
+      finding.status === 'aprobado' ? 'Hallazgo aprobado y añadido a Hallazgos' : 'Hallazgo guardado como borrador'
+    );
   };
 
   const updateFinding = (
@@ -569,15 +588,8 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
   };
 
-  const deleteFinding = (projectId: string, findingId: string) => {
-    setAllProjects((prev) =>
-      prev.map((p) =>
-        p.id === projectId
-          ? { ...p, findings: p.findings.filter((f) => f.id !== findingId) }
-          : p
-      )
-    );
-  };
+  const deleteFinding = (projectId: string, findingId: string) =>
+    removeWithUndo(projectId, 'findings', findingId, 'Hallazgo eliminado');
 
   const submitSurveyResponse = (
     projectId: string,

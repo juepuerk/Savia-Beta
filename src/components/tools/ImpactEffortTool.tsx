@@ -82,10 +82,10 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
           <MethodIcon methodId="impact_effort" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Matriz de Priorización (Impacto vs. Esfuerzo)</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'impact_effort')?.durationEstimate}</span>
-              <span className="text-[#7D71A4]">· {items.length} iniciativas</span>
+              <span className="text-[#958AC0]">· {items.length} iniciativas</span>
             </div>
           </div>
         </div>
@@ -96,11 +96,11 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
           </div>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showAddForm ? 'Cerrar' : 'Proponer iniciativa'}
-            aria-label={showAddForm ? 'Cerrar formulario' : 'Proponer iniciativa'}
           >
             {showAddForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddForm ? 'Cerrar' : 'Proponer iniciativa'}</span>
           </button>
         </div>
       </div>
@@ -181,19 +181,19 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
               title="Guardar iniciativa"
-              aria-label="Guardar iniciativa"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar</span>
             </button>
           </div>
         </form>
@@ -212,7 +212,7 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: quad.color }} />
                     {quad.name}
                   </h4>
-                  <span className="text-[11px] text-[#7D71A4]">{quad.subtitle}</span>
+                  <span className="text-xs text-[#958AC0]">{quad.subtitle}</span>
                 </div>
                 <span className="text-xs font-mono text-[#D8B4FE] bg-[#0E0A1D] border border-[#241D42] px-2 py-0.5 rounded">
                   {quad.items.length}
@@ -221,7 +221,7 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
 
               <div className="space-y-2.5">
                 {quad.items.length === 0 ? (
-                  <p className="text-xs text-[#7D71A4] py-6 text-center">Vacío</p>
+                  <p className="text-xs text-[#958AC0] py-6 text-center">Vacío</p>
                 ) : (
                   quad.items.map((it) => {
                     const hasVoted = it.votedUserIds.includes(currentUser.id);
@@ -234,7 +234,7 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
                         <div className="flex items-start justify-between gap-2">
                           <div>
                             <span className="text-xs font-medium text-[#F4F1FF] block">{it.title}</span>
-                            <span className="text-[11px] font-mono text-[#7D71A4]">
+                            <span className="text-xs font-mono text-[#958AC0]">
                               I:{it.impact} · E:{it.effort} · {it.category}
                             </span>
                           </div>
@@ -258,7 +258,7 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
                           <p className="text-xs text-[#A89EC9] leading-relaxed">{it.description}</p>
                         )}
 
-                        <div className="flex items-center justify-between pt-2 border-t border-[#221A3D] text-[11px] text-[#7D71A4]">
+                        <div className="flex items-center justify-between pt-2 border-t border-[#221A3D] text-xs text-[#958AC0]">
                           <span>{it.authorName}</span>
                           <button
                             onClick={() => {
@@ -272,11 +272,11 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
                                 status: 'aprobado',
                               });
                             }}
-                            className="p-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
+                            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
                             title="Aprobar para informe"
-                            aria-label={`Aprobar "${it.title}" para el informe`}
                           >
                             <Check className="w-3.5 h-3.5" />
+                            <span>Aprobar</span>
                           </button>
                         </div>
                       </div>
@@ -286,7 +286,7 @@ export const ImpactEffortTool: React.FC<{ project: Project }> = ({ project }) =>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#221A3D] text-[11px] text-[#7D71A4] mt-3">
+            <div className="pt-3 border-t border-[#221A3D] text-xs text-[#958AC0] mt-3">
               {quad.advice}
             </div>
           </div>

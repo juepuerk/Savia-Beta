@@ -89,10 +89,10 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
           <MethodIcon methodId="customer_journey" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Customer Journey Map</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'customer_journey')?.durationEstimate}</span>
-              <span className="text-[#7D71A4]">· {stages.length} fases</span>
+              <span className="text-[#958AC0]">· {stages.length} fases</span>
             </div>
           </div>
         </div>
@@ -103,11 +103,11 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
           </div>
           <button
             onClick={() => setShowAddModal(!showAddModal)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showAddModal ? 'Cerrar' : 'Añadir fase'}
-            aria-label={showAddModal ? 'Cerrar formulario' : 'Añadir fase al journey map'}
           >
             {showAddModal ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddModal ? 'Cerrar' : 'Añadir fase'}</span>
           </button>
         </div>
       </div>
@@ -222,19 +222,19 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
             <button
               type="button"
               onClick={() => setShowAddModal(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] hover:text-[#F4F1FF] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg"
               title="Guardar fase"
-              aria-label="Guardar fase"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar fase</span>
             </button>
           </div>
         </form>
@@ -250,11 +250,11 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
               className="bg-[#120E24]/80 backdrop-blur-xl rounded-2xl border border-[#2A2248] p-4 flex flex-col justify-between hover:border-[#463578] transition-all space-y-4"
             >
               <div>
-                <div className="flex items-center justify-between text-xs text-[#7D71A4] mb-1">
+                <div className="flex items-center justify-between text-xs text-[#958AC0] mb-1">
                   <span className="font-mono">0{idx + 1}</span>
                   <button
                     onClick={() => deleteJourneyStage(project.id, stage.id)}
-                    className="p-1 text-[#7D71A4] hover:text-[#F472B6] transition-colors"
+                    className="p-1 text-[#958AC0] hover:text-[#F472B6] transition-colors"
                     title="Eliminar fase"
                     aria-label={`Eliminar fase ${stage.stageName}`}
                   >
@@ -281,11 +281,11 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
                   <div>
                     <span className="font-medium text-[#F4F1FF]">Acción:</span> {stage.userAction}
                   </div>
-                  {stage.thoughts && <div className="italic text-[#7D71A4]">"{stage.thoughts}"</div>}
+                  {stage.thoughts && <div className="italic text-[#958AC0]">"{stage.thoughts}"</div>}
                 </div>
 
                 <div className="mt-3">
-                  <div className="flex flex-wrap gap-1 text-[11px]">
+                  <div className="flex flex-wrap gap-1 text-xs">
                     {stage.touchpointChannels.map((c, i) => (
                       <span
                         key={i}
@@ -299,7 +299,7 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
 
                 {stage.painPoints.length > 0 && (
                   <div className="mt-3">
-                    <span className="text-[11px] font-medium text-[#F472B6] block mb-1">Fricciones</span>
+                    <span className="text-xs font-medium text-[#F472B6] block mb-1">Fricciones</span>
                     <ul className="text-xs text-[#A89EC9] space-y-1">
                       {stage.painPoints.map((p, i) => (
                         <li key={i} className="flex items-start gap-1.5">
@@ -313,7 +313,7 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
 
                 {stage.opportunities.length > 0 && (
                   <div className="mt-3">
-                    <span className="text-[11px] font-medium text-[#22D3EE] block mb-1">Oportunidades</span>
+                    <span className="text-xs font-medium text-[#22D3EE] block mb-1">Oportunidades</span>
                     <ul className="text-xs text-[#A89EC9] space-y-1">
                       {stage.opportunities.map((op, i) => (
                         <li key={i} className="flex items-start gap-1.5">
@@ -326,7 +326,7 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
                 )}
               </div>
 
-              <div className="pt-2 border-t border-[#221A3D] flex items-center justify-between text-[11px] text-[#7D71A4]">
+              <div className="pt-2 border-t border-[#221A3D] flex items-center justify-between text-xs text-[#958AC0]">
                 <span>{stage.authorName}</span>
                 <button
                   onClick={() => {
@@ -340,11 +340,11 @@ export const JourneyMapTool: React.FC<{ project: Project }> = ({ project }) => {
                       status: 'aprobado',
                     });
                   }}
-                  className="p-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 bg-[#1E1638] border border-[#463578] text-[#D8B4FE] hover:border-[#B892FF] rounded-lg transition-colors"
                   title="Aprobar como hallazgo"
-                  aria-label={`Convertir ${stage.stageName} en hallazgo`}
                 >
                   <Check className="w-3.5 h-3.5" />
+                  <span>Aprobar</span>
                 </button>
               </div>
             </div>

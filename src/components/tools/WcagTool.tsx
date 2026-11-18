@@ -83,7 +83,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
           <MethodIcon methodId="wcag_audit" variant="badge" size="sm" />
           <div>
             <h3 className="text-base font-bold text-[#F4F1FF]">Auditoría de Accesibilidad (WCAG 2.2 AA)</h3>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D8B4FE] mt-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-[#D8B4FE] mt-0.5">
               <Clock className="w-3 h-3 text-[#B892FF] shrink-0" />
               <span>{METHODS_CATALOG.find((m) => m.id === 'wcag_audit')?.durationEstimate}</span>
             </div>
@@ -92,7 +92,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
                 {compliance.complianceRate}%
               </span>
               <span className="text-xs text-[#22D3EE]">conformidad</span>
-              <span className="text-xs text-[#7D71A4] font-mono">
+              <span className="text-xs text-[#958AC0] font-mono">
                 · {compliance.passCount} ok · {compliance.failCount} fallas
               </span>
             </div>
@@ -105,11 +105,11 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
           </div>
           <button
             onClick={() => setShowAddModal(!showAddModal)}
-            className="p-2.5 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
+            className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-xl transition-colors shrink-0 shadow-[0_0_16px_rgba(255,107,26,0.3)]"
             title={showAddModal ? 'Cerrar' : 'Añadir criterio'}
-            aria-label={showAddModal ? 'Cerrar formulario WCAG' : 'Añadir criterio WCAG'}
           >
             {showAddModal ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            <span>{showAddModal ? 'Cerrar' : 'Añadir criterio'}</span>
           </button>
         </div>
       </div>
@@ -130,7 +130,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
             </button>
           ))}
         </div>
-        <span className="text-xs font-mono text-[#7D71A4] pr-2">{filteredItems.length}</span>
+        <span className="text-xs font-mono text-[#958AC0] pr-2">{filteredItems.length}</span>
       </div>
 
       {showAddModal && (
@@ -209,19 +209,19 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
             <button
               type="button"
               onClick={() => setShowAddModal(false)}
-              className="p-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#1E1638] border border-[#463578] text-[#C4B5FD] rounded-lg"
               title="Cancelar"
-              aria-label="Cancelar"
             >
               <X className="w-4 h-4" />
+              <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="p-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
+              className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-3 py-2 bg-[#FF6B1A] text-[#090616] rounded-lg"
               title="Guardar criterio"
-              aria-label="Guardar criterio WCAG"
             >
               <Check className="w-4 h-4" />
+              <span>Guardar</span>
             </button>
           </div>
         </form>
@@ -235,7 +235,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 text-xs text-[#7D71A4]">
+                <div className="flex items-center gap-2 text-xs text-[#958AC0]">
                   <span className="font-medium text-[#A89EC9]">{item.principle}</span>
                   <span>·</span>
                   <span className="font-mono text-[#22D3EE]">
@@ -251,7 +251,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
                   className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
                     item.status === 'pass'
                       ? 'bg-[#22D3EE] text-[#090616] font-semibold'
-                      : 'text-[#7D71A4] hover:text-[#F4F1FF]'
+                      : 'text-[#958AC0] hover:text-[#F4F1FF]'
                   }`}
                 >
                   Pass
@@ -261,7 +261,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
                   className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
                     item.status === 'fail'
                       ? 'bg-[#EC4899] text-[#090616] font-semibold'
-                      : 'text-[#7D71A4] hover:text-[#F4F1FF]'
+                      : 'text-[#958AC0] hover:text-[#F4F1FF]'
                   }`}
                 >
                   Fail
@@ -271,7 +271,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
                   className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
                     item.status === 'not_applicable'
                       ? 'bg-[#241B46] text-[#D8B4FE] font-semibold'
-                      : 'text-[#7D71A4] hover:text-[#F4F1FF]'
+                      : 'text-[#958AC0] hover:text-[#F4F1FF]'
                   }`}
                 >
                   N/A
@@ -282,7 +282,7 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
             {item.observations && (
               <div className="text-xs text-[#A89EC9] bg-[#0E0A1D] p-3 rounded-lg border border-[#241D42]">
                 {item.elementSelectorOrLocation && (
-                  <code className="text-[11px] font-mono text-[#7D71A4] block mb-1">
+                  <code className="text-xs font-mono text-[#958AC0] block mb-1">
                     {item.elementSelectorOrLocation}
                   </code>
                 )}
@@ -300,11 +300,11 @@ export const WcagTool: React.FC<{ project: Project }> = ({ project }) => {
               <div className="pt-2 border-t border-[#221A3D] flex justify-end">
                 <button
                   onClick={() => handleApproveFinding(item)}
-                  className="p-1.5 bg-[#2B1228] border border-[#EC4899]/40 text-[#F472B6] hover:bg-[#3A1735] rounded-lg transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 bg-[#2B1228] border border-[#EC4899]/40 text-[#F472B6] hover:bg-[#3A1735] rounded-lg transition-colors"
                   title="Aprobar falla como hallazgo"
-                  aria-label={`Aprobar falla WCAG ${item.code} como hallazgo`}
                 >
                   <ThumbsUp className="w-3.5 h-3.5" />
+                  <span>Aprobar</span>
                 </button>
               </div>
             )}

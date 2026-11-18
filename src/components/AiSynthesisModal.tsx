@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Check, RefreshCw, X } from 'lucide-react';
 import { Project } from '../types';
+import { Modal } from './ui/Modal';
 import { useWorkspace } from '../context/WorkspaceContext';
 
 interface DraftFinding {
@@ -75,12 +76,11 @@ export const AiSynthesisModal: React.FC<{
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05030E]/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-[#120E24] border border-[#2A2248] rounded-2xl p-6 space-y-5 max-h-[85vh] overflow-y-auto shadow-[0_24px_80px_rgba(0,0,0,0.65)]">
+    <Modal onClose={onClose} labelledBy="ai-title">
         <div className="flex items-center justify-between border-b border-[#221A3D] pb-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#B892FF]" />
-            <h2 className="text-sm font-semibold text-[#F4F1FF]">Síntesis Asistida</h2>
+            <h2 id="ai-title" className="text-base font-semibold text-[#F4F1FF]">Síntesis con IA</h2>
           </div>
 
           <div className="flex items-center gap-2">
@@ -88,11 +88,10 @@ export const AiSynthesisModal: React.FC<{
               type="button"
               onClick={handleSynthesize}
               disabled={loading}
-              className="p-2 bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg disabled:opacity-50"
-              title="Generar síntesis"
-              aria-label="Generar síntesis con IA"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold bg-[#FF6B1A] hover:bg-[#FF823A] text-[#090616] rounded-lg disabled:opacity-60"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} aria-hidden="true" />
+              {loading ? 'Analizando…' : summary || drafts.length > 0 ? 'Volver a generar' : 'Generar síntesis'}
             </button>
             <button
               type="button"
@@ -106,15 +105,21 @@ export const AiSynthesisModal: React.FC<{
           </div>
         </div>
 
+        {loading && (
+          <p className="text-sm text-[#A89EC9] py-6 text-center" role="status">
+            Analizando la evidencia del proyecto. Suele tardar entre 5 y 20 segundos.
+          </p>
+        )}
+
         {error && (
-          <div className="bg-[#2B1228] border border-[#EC4899]/40 text-[#F472B6] text-xs p-3 rounded-xl">
+          <div role="alert" className="bg-[#2B1228] border border-[#EC4899]/40 text-[#F472B6] text-xs p-3 rounded-xl">
             {error}
           </div>
         )}
 
         {!summary && drafts.length === 0 && !loading && !error && (
           <p className="text-xs text-[#A89EC9] py-6 text-center">
-            Pulsa el botón de síntesis para analizar la evidencia recopilada y revisar propuestas antes de aprobarlas.
+            La IA lee la evidencia de todos los métodos del proyecto y propone hallazgos. Nada se guarda hasta que apruebes cada uno.
           </p>
         )}
 
@@ -141,23 +146,22 @@ export const AiSynthesisModal: React.FC<{
                     type="button"
                     disabled={approved}
                     onClick={() => handleApproveDraft(idx, draft)}
-                    className={`p-1.5 rounded-lg border shrink-0 ${
+                    className={`inline-flex items-center justify-center gap-1.5 font-semibold text-xs px-2.5 py-1.5 rounded-lg border shrink-0 ${
                       approved
                         ? 'bg-[#0F242C] border-[#22D3EE]/40 text-[#22D3EE]'
                         : 'bg-[#1E1638] border-[#463578] text-[#D8B4FE] hover:border-[#B892FF]'
                     }`}
                     title={approved ? 'Aprobado' : 'Aprobar hallazgo'}
-                    aria-label={`Aprobar "${draft.title}"`}
                   >
                     <Check className="w-3.5 h-3.5" />
+                    <span>{approved ? 'Aprobado' : 'Aprobar'}</span>
                   </button>
                 </div>
-                <p className="text-[11px] text-[#22D3EE]">{draft.recommendation}</p>
+                <p className="text-xs text-[#22D3EE]">{draft.recommendation}</p>
               </div>
             );
           })}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 };
